@@ -2014,7 +2014,7 @@ let increase2 = 0;
 let preSum = 0;
 
 for(let i = 2; i < input.length; i += 1){
-    const sum = input[i-2] + input[i-1] + input[i]; 
+    const sum = input[i-2] + input[i-1] + input[i];
     if( i !== 2 && sum > preSum ){
         increase2 += 1;
     }
@@ -2022,5 +2022,3 @@ for(let i = 2; i < input.length; i += 1){
 }
 
 console.log(increase2);
-
-

@@ -1034,5 +1034,5 @@ for(let i = 0; i < input.length; i += 1){
         aim -= parseInt(instruction[1]);
     }
 }
- 
+
 console.log(hor2 * depth2);
