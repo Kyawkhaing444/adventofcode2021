@@ -1,3 +1,5 @@
+
+
 let tempInput = `62,963 -> 844,181
 58,85 -> 917,944
 137,76 -> 137,347
@@ -520,7 +522,6 @@ const input = tempInput
     from : {x: from[0], y: from[1]},
     to : {x: to[0], y: to[1]},
   }))
-  .filter(pair => pair.from.x === pair.to.x || pair.from.y === pair.to.y)
 
 const countTable = {};
 
@@ -544,6 +545,18 @@ for(let i = 0; i < input.length; i++){
             countTable[`${j},${from.y}`] = 1;
         }else{
             countTable[`${j},${from.y}`]++;
+        }
+      }
+  }else{
+    const isLargeOrSmallx = from.x < to.x ? 1 : -1;
+    const isLargeOrSmally = from.y < to.y ? 1 : -1;
+    let x = from.x;
+    let y = from.y;
+      for(; isLargeOrSmallx === 1 ? x <= to.x : x >= to.x ; x += isLargeOrSmallx, y += isLargeOrSmally){
+        if(!countTable[`${x},${y}`]){
+            countTable[`${x},${y}`] = 1;
+        }else{
+            countTable[`${x},${y}`]++;
         }
       }
   }
