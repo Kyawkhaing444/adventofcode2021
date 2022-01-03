@@ -529,41 +529,23 @@ for(let i = 0; i < input.length; i++){
   const from = input[i].from;
   const to = input[i].to;
   if(from.x === to.x){
-    if(from.y < to.y){
-      for(let j = from.y; j <= to.y; j++){
-        if(!countTable[`${from.x},${j}`]){
-            countTable[`${from.x},${j}`] = 1;
-        }else{
-            countTable[`${from.x},${j}`]++;
-        }
-      }
-    }else if(from.y > to.y){
-      for(let j = from.y; j >= to.y; j--){
-        if(!countTable[`${from.x},${j}`]){
-            countTable[`${from.x},${j}`] = 1;
-        }else{
-            countTable[`${from.x},${j}`]++;
-        }
+    const isLargeOrSmall = from.y < to.y ? 1 : -1;
+    for(let j = from.y; isLargeOrSmall === 1 ? j <= to.y : j >= to.y; j += isLargeOrSmall){
+      if(!countTable[`${from.x},${j}`]){
+        countTable[`${from.x},${j}`] = 1;
+      }else{
+        countTable[`${from.x},${j}`]++;
       }
     }
   }else if(from.y === to.y){
-     if(from.x < to.x){
-      for(let j = from.x; j <= to.x; j++){
+     const isLargeOrSmall = from.x < to.x ? 1 : -1;
+      for(let j = from.x; isLargeOrSmall === 1 ? j <= to.x : j >= to.x ; j += isLargeOrSmall){
         if(!countTable[`${j},${from.y}`]){
             countTable[`${j},${from.y}`] = 1;
         }else{
             countTable[`${j},${from.y}`]++;
         }
       }
-    }else if(from.x > to.x){
-      for(let j = from.x; j >= to.x; j--){
-        if(!countTable[`${j},${from.y}`]){
-            countTable[`${j},${from.y}`] = 1;
-        }else{
-            countTable[`${j},${from.y}`]++;
-        }
-      }
-    }
   }
 }
 
