@@ -552,7 +552,7 @@ for(let i = 0; i < input.length; i++){
     const isLargeOrSmally = from.y < to.y ? 1 : -1;
     let x = from.x;
     let y = from.y;
-      for(; isLargeOrSmallx === 1 ? x <= to.x : x >= to.x ; x += isLargeOrSmallx, y += isLargeOrSmally){
+      for(; (isLargeOrSmallx === 1 ? x <= to.x : x >= to.x) && (isLargeOrSmally === 1 ? y <= to.y : y >= to.y) ; x += isLargeOrSmallx, y += isLargeOrSmally){
         if(!countTable[`${x},${y}`]){
             countTable[`${x},${y}`] = 1;
         }else{
