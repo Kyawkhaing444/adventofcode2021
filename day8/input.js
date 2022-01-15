@@ -1,3 +1,4 @@
+
 let input = `ecgabfd gfbe dgbeaf aeg gfbda eg bgdcaf efgdca abced eadgb | begf decgfa aeg eg
 ebfg bfgdea gaf gf baedgc dafec cfdabg ecfabgd fdgea dbaeg | gaedbc egbf dbgcea dagfebc
 cfadeg ca bacg dfabe dgcbf dbegafc dac afbdgc gcbedf bfcda | fbdac adbef bgcdfae dcagfe
@@ -210,27 +211,6 @@ gba eagbcf gb gbacf dacgebf bceg gcafed acfeg acbfd adegfb | abfcdeg dbcfage fae
 // egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb
 // gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce`
 
-const entrys = input.split('\n');
-let countDigits = 0;
-
-entrys.forEach((entry) => {
-  const [patterns, doutputs] = entry.split(" | ");
-  const lengthMap = new Map();
-  const pattern = patterns.split(" ");
-  pattern.forEach((item)=> {
-    if(item.length === 2 || item.length === 3 || item.length === 4 || item.length === 7){
-      if(!lengthMap.has(item.length)){
-        lengthMap.set(item.length, 0);
-      }
-      lengthMap.set(item.length, lengthMap.get(item.length)+1);
-    }
-  })
-  const doutput = doutputs.split(" ");
-  doutput.forEach((item) => {
-    if(lengthMap.get(item.length) === 1){
-      countDigits++;
-    }
-  })
-})
-
-console.log({countDigits});
+module.exports = {
+	input,
+};
