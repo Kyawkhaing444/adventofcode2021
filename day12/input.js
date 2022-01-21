@@ -22,13 +22,13 @@ start-IV
 start-co
 start-pn`;
 
-input = `start-A
-start-b
-A-c
-A-b
-b-d
-A-end
-b-end`;
+// input = `start-A
+// start-b
+// A-c
+// A-b
+// b-d
+// A-end
+// b-end`;
 
 module.exports = {
 	input,

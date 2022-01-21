@@ -17,29 +17,48 @@ function partOne(){
         return graph;
     }, new Map());
 
-    console.log(graph);
-    let pathCount = 0;
-    const stack = [];
-    let visitedForSmall = new Set();
-    stack.push('start');
-    while(stack.length > 0){
-        const cave = stack.pop();
-        if(cave === 'end'){
-            pathCount++;
-        }else{
-            if(graph.get(cave)){
-                graph.get(cave).forEach((nCave) => {
-                    if(!visitedForSmall.has(nCave)){
-                        stack.push(nCave);
-                        if(nCave === nCave.toLowerCase() && nCave !== 'start' && nCave !== 'end'){
-                            visitedForSmall.add(nCave);
-                        }
+
+    const finished = [];
+    const paths = [['start']];
+
+    while(paths.length > 0){
+        let to_add = [];
+        for(let i = 0; i < paths.length; i++){
+            const path = paths[i];
+            const tail = path[path.length - 1];
+            if(tail === 'end'){
+                finished.push(path);
+                paths.splice(i, 1);
+                i--;
+                continue;
+            }
+            let deadEnd = true;
+            if(graph.get(tail)){
+                graph.get(tail).forEach((cave) => {
+                    if(cave === cave.toLowerCase() && path.includes(cave)){
+                        return;
+                    }
+                    if(deadEnd){
+                        deadEnd = false;
+                        path.push(cave);
+                    }else{
+                        const newPath = path.slice(0, -1);
+                        newPath.push(cave);
+                        to_add.push(newPath);
                     }
                 })
             }
+            if(deadEnd){
+                paths.splice(i, 1);
+                i--;
+            }
         }
+        paths.push(...to_add);
     }
-    console.log({pathCount})
+
+    console.log({
+        finished: finished.length
+    })
 }
 
 partOne();
