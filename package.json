@@ -1,0 +1,22 @@
+{
+  "name": "adventofcode2021",
+  "version": "1.0.0",
+  "description": "",
+  "main": "day1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kyawkhaing444/adventofcode2021.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kyawkhaing444/adventofcode2021/issues"
+  },
+  "homepage": "https://github.com/Kyawkhaing444/adventofcode2021#readme",
+  "dependencies": {
+    "heap": "^0.2.7"
+  }
+}
