@@ -4,83 +4,44 @@ function HextoBin(hexInput){
     return hexInput.split('').map(i => parseInt(i, 16).toString(2).padStart(4, '0')).join('');
 }
 
-function BintoDecimal(binary){
-    return parseInt(binary , 2);
-}
+const data = HextoBin(input);
 
-const hex = HextoBin(input);
+function parse(packet, count= -1){
+    if(packet === "" || parseInt(packet) === 0){
+        return 0;
+    }
+    if(count === 0){
+        return parse(packet, -1)
+    }
+    const version = parseInt(packet.substring(0,3), 2);
+    const typeID = parseInt(packet.substring(3,6), 2);
 
-function subPacketCal(packet){
-    const version = BintoDecimal(packet.substring(0, 3));
-    // const t = packet.substring(3, 6);
-    const remainTemp = packet.substring(6);
-    let temp = remainTemp.substring(0,5);
-    let remain = remainTemp.substring(5);
-    let zeroCount = 0;
-    while(temp.charAt(0) !== '0' || zeroCount === 0){
-        // console.log({b: temp.charAt(0) !== '0' || zeroCount === 0, va: temp.charAt(0)});
-        temp = remain.substring(0, 5);
-        remain = remainTemp.substring(5);
-        if(temp.charAt(0) === '0'){
-            zeroCount++;
+    // check typeID is literal value
+    if(typeID === 4){
+        let i = 6;
+        let end = false;
+        while(!end){
+            if(packet.charAt(i) === '0'){
+                end = true;
+            }
+            i += 5;
         }
+        return version + parse(packet.substring(i), count - 1);
     }
-    return {
-        version,
-        remain
+
+    const lengthID = packet.charAt(6);
+    // check lengthID is operator
+    if(lengthID === '0'){
+        const numBits = parseInt(packet.substring(7, 22), 2);
+        return version + parse(packet.substring(22, 22 + numBits), -1) + parse(packet.substring(22+numBits), count - 1);
+    }else{
+        const numPackets = parseInt(packet.substring(7, 18), 2);
+        return version + parse(packet.substring(18), numPackets);
     }
 }
 
-function zeroOperator(){
-    let remainPart = hex.substring(7);
-    const totalLength = BintoDecimal(remainPart.substring(0, 15));
-    let result = 0;
-    remainPart = remainPart.substring(15);
-    const remainLength = remainPart.length - totalLength;
+const result = parse(data, -1);
 
-    while(remainPart.length > remainLength){
-        const { version, remain } = subPacketCal(remainPart);
-        // console.log({
-        //     remainPart
-        // })
-        remainPart = remain;
-        result += version
-    }
-
-    return result;
-}
-
-function oneOperator(){
-    let remainPart = hex.substring(7);
-    const totalPacket = BintoDecimal(remainPart.substring(0, 11));
-    let result = 0;
-    remainPart = remainPart.substring(11);
-    let packetCount = 0;
-
-    while(packetCount < totalPacket){
-        const { version, remain } = subPacketCal(remainPart);
-        remainPart = remain;
-        result += version
-        packetCount++;
-    }
-
-    return result;
-}
-
-function PartOne(){
-    const v = hex.substring(0,3);
-    // const t = hex.substring(3, 6);
-    const tl = hex.charAt(7);
-    let result = parseInt(BintoDecimal(v));
-    if(tl === '0'){
-        result += zeroOperator();
-    }else if(tl === '1'){
-        result += oneOperator();
-    }
-
-    console.log({
-        result
-    })
-}
-
-PartOne()
+console.log({
+    result
+})
