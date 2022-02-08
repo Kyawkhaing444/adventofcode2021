@@ -54,3 +54,7 @@ const {maxY} = routes.sort((a,b) => b.maxY - a.maxY)[0];
 console.log({
     maxY
 })
+
+module.exports = {
+	findValidRoute
+};
